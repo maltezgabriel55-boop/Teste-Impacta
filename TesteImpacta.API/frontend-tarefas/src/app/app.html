@@ -1,0 +1,82 @@
+<div class="container">
+  <header class="header">
+    <h1>Gerenciador de Tarefas</h1>
+    <p>Cadastre, edite e acompanhe suas tarefas.</p>
+  </header>
+
+  <section class="card">
+    <h2>{{ editando ? 'Editar Tarefa' : 'Nova Tarefa' }}</h2>
+
+    <p class="mensagem" *ngIf="mensagem">{{ mensagem }}</p>
+
+    <form (ngSubmit)="salvar()" class="form">
+      <input
+        type="text"
+        name="titulo"
+        [(ngModel)]="tarefa.titulo"
+        placeholder="Título da tarefa"
+        required
+      >
+
+      <textarea
+        name="descricao"
+        [(ngModel)]="tarefa.descricao"
+        placeholder="Descrição da tarefa"
+      ></textarea>
+
+      <select name="status" [(ngModel)]="tarefa.status">
+        <option value="Pendente">Pendente</option>
+        <option value="Concluída">Concluída</option>
+      </select>
+
+      <div class="botoes">
+        <button type="submit" class="btn primary">
+          {{ editando ? 'Atualizar' : 'Criar' }}
+        </button>
+
+        <button
+          *ngIf="editando"
+          type="button"
+          class="btn secondary"
+          (click)="limparFormulario()"
+        >
+          Cancelar
+        </button>
+      </div>
+    </form>
+  </section>
+
+  <section class="card">
+    <div class="lista-header">
+      <h2>Minhas Tarefas</h2>
+      <span>{{ tarefas.length }} tarefa(s)</span>
+    </div>
+
+    <div *ngIf="tarefas.length === 0" class="vazio">
+      Nenhuma tarefa cadastrada.
+    </div>
+
+    <div class="task-card" *ngFor="let tarefa of tarefas">
+      <div>
+        <h3>{{ tarefa.titulo }}</h3>
+        <p>{{ tarefa.descricao }}</p>
+        <span
+          class="status"
+          [class.concluida]="tarefa.status === 'Concluída'"
+        >
+          {{ tarefa.status }}
+        </span>
+      </div>
+
+      <div class="acoes">
+        <button class="btn secondary" (click)="editar(tarefa)">
+          Editar
+        </button>
+
+        <button class="btn danger" (click)="excluir(tarefa.id)">
+          Excluir
+        </button>
+      </div>
+    </div>
+  </section>
+</div>

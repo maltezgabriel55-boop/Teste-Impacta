@@ -1,0 +1,6 @@
+@TesteImpacta.API_HostAddress = http://localhost:5124
+
+GET {{TesteImpacta.API_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
